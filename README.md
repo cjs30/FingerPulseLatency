@@ -16,4 +16,9 @@ Temporal alignment between the H10 and Verity Sense can be done by holding them 
 
 There is essentially no documentation within the code and I am not a programmer. This utility was written for a student doing a final year project. 'Real' programmers may experience mixed emotions on viewing the code for which I apologize.
 
+# Logic involved in decoding frame data
+For those struggling to decode the PPG frame data I include below a little bit of information which might help.
+
+The routine completeDeltaFrame is used to 'deconvolve' the frame data. For the PPG it assumes that the data structure starts with four channels each with data consuming 3 bytes. That allows the offsets between the headers of each packet to be calculated (10+4*3) and the start of the delta frame as well as loading in those intitial sensor values (getInitialSensorValues) that will then have the offsets applied. Then I loop through the data structure extracting the details of each delta frame (DeltaFrameDescription) which are used to calculate the position of the next header and also extract the data from the delta frame (reSlice and addDeltaFrame). The reSlice function requires some explannation since it repackages the deltaframe data into a form that can be easily read irrespective of the bit depth of the deltaframe data (which is variable).[I will continue later]
+
 Suggestions for improvements are more than welcome - Christof Schwiening cjs30@cam.ac.uk
